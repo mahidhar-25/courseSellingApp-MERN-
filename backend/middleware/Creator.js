@@ -6,6 +6,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 function creatorMiddleware(req, res, next) {
   try {
     const token = req.headers.authorization;
+    console.log(token);
     const isValidToken = jwt.verify(token, JWT_SECRET_KEY);
     if (isValidToken) {
       req.body.username = isValidToken;

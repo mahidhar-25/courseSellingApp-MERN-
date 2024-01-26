@@ -5,6 +5,7 @@ import LandingPage from "./components/LandingPage";
 import { RecoilRoot } from "recoil";
 import PurchasedCourses from "./components/PurchasedCourses";
 import NavItems from "./components/NavItems";
+import MyCourses from "./components/MyCourses";
 // import SignUp from "./components/authentication/SignUp";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/home" element={<LandingPage />}></Route>
             <Route path="/myLearnings" element={<PurchasedCourses />}></Route>
+            <Route path="myCourses" element={<MyCourses />}></Route>
 
             {/* <Route path="/signup" element={<SignUp />}></Route> */}
           </Routes>

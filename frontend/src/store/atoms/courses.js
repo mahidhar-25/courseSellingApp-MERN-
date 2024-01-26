@@ -41,6 +41,35 @@ export const filteredAllCourses = atom({
     },
   }),
 });
+
+export const filteredMyCourses = atom({
+  key: "filteredMyCourses",
+  default: selector({
+    key: "filteredMyCoursesSelector",
+    get: ({ get }) => {
+      const courses = get(allCourses);
+      const createdCourses = get(myCourses);
+
+      console.log(createdCourses);
+      const filteredCourses = createdCourses.map((course) => {
+        const filteredCourse = courses.find((c) => c._id === course);
+        return {
+          ...filteredCourse,
+        };
+      });
+
+      const filter = get(filterToSearch);
+      console.log(filteredCourses);
+      if (filter === "") return filteredCourses;
+
+      const myfilteredCourses = filteredCourses.filter((course) => {
+        return course.title.toLowerCase().includes(filter.toLowerCase());
+      });
+      console.log(myfilteredCourses);
+      return myfilteredCourses;
+    },
+  }),
+});
 export const myFilteredPurchasedCourses = atom({
   key: "myFilteredPurchasedCourses",
   default: selector({

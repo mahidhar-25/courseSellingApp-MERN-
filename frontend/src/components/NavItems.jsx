@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { filterToSearch, showNav } from "../store/atoms/nav";
 import { useSetRecoilState, useRecoilState } from "recoil";
-import { allCourses, myPurchasedCourses } from "../store/atoms/courses";
+import {
+  allCourses,
+  myCourses,
+  myPurchasedCourses,
+} from "../store/atoms/courses";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +24,7 @@ function NavItems() {
   const setFilter = useSetRecoilState(filterToSearch);
   const setPurchasedCourses = useSetRecoilState(myPurchasedCourses);
   const setAllCourses = useSetRecoilState(allCourses);
+  const setMyCourses = useSetRecoilState(myCourses);
 
   const setNavBarSign = useSetRecoilState(showNav);
   const getAllCourses = async () => {
@@ -60,10 +65,30 @@ function NavItems() {
     }
   };
 
+  const getMyCourses = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/creator/createdCourses`,
+        {
+          headers: {
+            authorization: accessToken,
+          },
+        }
+      );
+      console.log(response.data.createdCourses);
+
+      setMyCourses(response.data.createdCourses);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     console.log("i am use effect renendered");
     getAllCourses();
     getPurchasedCourses();
+    getMyCourses();
   }, []);
 
   return (
@@ -121,7 +146,10 @@ function NavItems() {
       <button
         type="button"
         className={buttonClassText}
-        // onClick={getMyCourses}
+        onClick={() => {
+          setNavBarSign({ ...allNavFalse, myCourses: true });
+          navigate("/myCourses");
+        }}
       >
         My Courses
       </button>

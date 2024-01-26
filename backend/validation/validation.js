@@ -5,16 +5,7 @@ const signInSchema = zod.object({
   password: zod.string().min(6),
 });
 
-const validateAdmin = (username, password) => {
-  const response = signInSchema.safeParse({ username, password });
-  if (response.success) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const validateUser = (username, password) => {
+const validateLoginDetails = (username, password) => {
   const response = signInSchema.safeParse({ username, password });
   if (response.success) {
     return true;
@@ -38,4 +29,4 @@ const validateCourse = (title, description, price, image) => {
   }
 };
 
-module.exports = { validateAdmin, validateCourse, validateUser };
+module.exports = { validateLoginDetails, validateCourse };

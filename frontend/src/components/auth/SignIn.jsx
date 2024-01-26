@@ -2,24 +2,18 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function SignUp() {
-  const navigate = useNavigate();
+const SignIn = () => {
   const baseUrl = "http://localhost:3000";
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showError, setShowError] = useState(false);
 
-  const createAccount = async () => {
-    if (password != confirmPassword) {
-      setShowError(true);
-      return;
-    }
-    setShowError(false);
+  const logIntoAccount = async () => {
     try {
+      console.log("request called");
       const loginToken = await axios.post(
-        `${baseUrl}/admin/signup`,
+        `${baseUrl}/creator/signin`,
         {
           username,
           password,
@@ -30,7 +24,10 @@ function SignUp() {
           },
         }
       );
-      console.log(loginToken);
+      localStorage.setItem("accessToken", loginToken.data.accessToken);
+      if (loginToken.data.accessToken) {
+        navigate("/home");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -41,7 +38,7 @@ function SignUp() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create new account
+            Sign in to your account
           </h2>
         </div>
 
@@ -79,6 +76,14 @@ function SignUp() {
                 >
                   Password
                 </label>
+                <div className="text-sm">
+                  <a
+                    href="#"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Forgot password?
+                  </a>
+                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -93,54 +98,30 @@ function SignUp() {
                 />
               </div>
             </div>
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Confirm Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                  required
-                  className="block w-full rounded-md border border-gray-400 py-1.5 px-2 text-gray-900 shadow-sm "
-                />
-              </div>
-              {showError && (
-                <p className="text-red-500 mt-1"> password doesn't match </p>
-              )}
-            </div>
+
             <div>
               <button
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={createAccount}
+                onClick={logIntoAccount}
               >
-                Sign up
+                Sign in
               </button>
             </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Already have a account ?{" "}
+            Not a member?{" "}
             <a
-              className="cursor-pointer font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              onClick={() => navigate("/signin")}
+              className="cursor-pointer  font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              onClick={() => navigate("/signup")}
             >
-              login
+              Signup
             </a>
           </p>
         </div>
       </div>
     </>
   );
-}
+};
 
-export default SignUp;
+export default SignIn;

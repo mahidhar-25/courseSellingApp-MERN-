@@ -1,8 +1,9 @@
 import React from "react";
 const progressPercentage = 60;
-function CourseCard({ imageUrl, title, description, rating, price }) {
+function CourseCard({ imageUrl, title, description, rating }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg flex flex-col mx-3 my-3  basis-1/4">
+      {console.log(title)}
       <img className="w-full" alt="course image " src={imageUrl} />
 
       <div className="mt-4 mb-3 p-2">

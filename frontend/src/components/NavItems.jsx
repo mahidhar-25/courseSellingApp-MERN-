@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import { showNav } from "../store/atoms/nav";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import React, { useCallback, useEffect } from "react";
+import { filterToSearch, showNav } from "../store/atoms/nav";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import { allCourses, myPurchasedCourses } from "../store/atoms/courses";
 
 import axios from "axios";
@@ -17,12 +17,12 @@ const allNavFalse = {
 };
 function NavItems() {
   const navigate = useNavigate();
+  const setFilter = useSetRecoilState(filterToSearch);
   const setPurchasedCourses = useSetRecoilState(myPurchasedCourses);
   const setAllCourses = useSetRecoilState(allCourses);
 
-  const [navBarSign, setNavBarSign] = useRecoilState(showNav);
-
-  const getAllCourses = useCallback(async () => {
+  const setNavBarSign = useSetRecoilState(showNav);
+  const getAllCourses = async () => {
     const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await axios.get(
@@ -36,15 +36,12 @@ function NavItems() {
       console.log(response.data);
 
       setAllCourses(response.data);
-      setNavBarSign({ ...allNavFalse, allCourses: true });
-
-      navigate("/home");
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  };
 
-  const getPurchasedCourses = useCallback(async () => {
+  const getPurchasedCourses = async () => {
     const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await axios.get(
@@ -58,23 +55,66 @@ function NavItems() {
       console.log(response.data.purchasedCourses);
 
       setPurchasedCourses(response.data.purchasedCourses);
-      setNavBarSign({ ...allNavFalse, myLearnings: true });
-
-      navigate("/myLearnings");
     } catch (e) {
       console.log(e);
     }
+  };
+
+  useEffect(() => {
+    console.log("i am use effect renendered");
+    getAllCourses();
+    getPurchasedCourses();
   }, []);
 
   return (
     <div className="mt-4 ms-12 ps-10">
-      <button type="button" className={buttonClassText} onClick={getAllCourses}>
+      <div className="max-w-md mb-3 shadow">
+        <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+          <div className="grid place-items-center h-full w-12 text-gray-300">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+
+          <input
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
+            className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+            type="text"
+            id="search"
+            placeholder="Search something.."
+          />
+        </div>
+      </div>
+      <button
+        type="button"
+        className={buttonClassText}
+        onClick={() => {
+          setNavBarSign({ ...allNavFalse, allCourses: true });
+          navigate("/home");
+        }}
+      >
         All Courses
       </button>
       <button
         type="button"
         className={buttonClassText}
-        onClick={getPurchasedCourses}
+        onClick={() => {
+          setNavBarSign({ ...allNavFalse, myLearnings: true });
+          navigate("/myLearnings");
+        }}
       >
         My Learning
       </button>

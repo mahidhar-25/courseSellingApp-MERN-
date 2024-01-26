@@ -4,6 +4,7 @@ import SignIn from "./components/auth/SignIn";
 import LandingPage from "./components/LandingPage";
 import { RecoilRoot } from "recoil";
 import PurchasedCourses from "./components/PurchasedCourses";
+import NavItems from "./components/NavItems";
 // import SignUp from "./components/authentication/SignUp";
 
 function App() {
@@ -11,11 +12,15 @@ function App() {
     <>
       <RecoilRoot>
         <BrowserRouter>
+          <div className="w-4/5 justify-center items-center mx-auto">
+            <NavItems />
+          </div>
           <Routes>
             <Route path="/" element={<SignIn />}></Route>
             <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/home" element={<LandingPage />}></Route>
             <Route path="/myLearnings" element={<PurchasedCourses />}></Route>
+
             {/* <Route path="/signup" element={<SignUp />}></Route> */}
           </Routes>
         </BrowserRouter>

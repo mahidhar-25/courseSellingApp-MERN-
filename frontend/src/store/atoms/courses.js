@@ -1,6 +1,7 @@
 import { atom, selector } from "recoil";
 import axios from "axios";
 import PurchasedCourses from "../../components/PurchasedCourses";
+import { filterToSearch } from "./nav";
 
 export const coursesAtom = atom({
   key: "courseAtom",
@@ -12,6 +13,34 @@ export const myPurchasedCourses = atom({
   default: [],
 });
 
+export const filteredAllCourses = atom({
+  key: "filteredAllCourses",
+  default: selector({
+    key: "filteredAllCoursesSelector",
+    get: ({ get }) => {
+      const courses = get(allCourses);
+      const filter = get(filterToSearch);
+
+      console.log({
+        courses,
+        filter,
+      });
+
+      if (filter === "") return courses;
+
+      const filteredCourses = courses.filter((course) => {
+        return course.title.toLowerCase().includes(filter.toLowerCase());
+      });
+
+      console.log({
+        courses,
+        filter,
+        filteredCourses,
+      });
+      return filteredCourses;
+    },
+  }),
+});
 export const myFilteredPurchasedCourses = atom({
   key: "myFilteredPurchasedCourses",
   default: selector({

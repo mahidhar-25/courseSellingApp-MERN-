@@ -9,3 +9,8 @@ export const showNav = atom({
     addNewCourse: false,
   },
 });
+
+export const filterToSearch = atom({
+  key: "filterToSearch",
+  default: "",
+});

@@ -1,8 +1,8 @@
 import React from "react";
 const progressPercentage = 60;
-function CouseCard({ imageUrl, title, description, rating, price }) {
+function CourseCard({ imageUrl, title, description, rating, price }) {
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg flex flex-col mx-3 basis-1/5">
+    <div className="max-w-sm rounded overflow-hidden shadow-lg flex flex-col mx-3 my-3  basis-1/4">
       <img className="w-full" alt="course image " src={imageUrl} />
 
       <div className="mt-4 mb-3 p-2">
@@ -30,4 +30,4 @@ function CouseCard({ imageUrl, title, description, rating, price }) {
   );
 }
 
-export default CouseCard;
+export default CourseCard;

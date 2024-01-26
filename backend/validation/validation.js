@@ -21,7 +21,15 @@ const validateCourse = (title, description, price, image) => {
     price: zod.number(),
     image: zod.string(),
   });
+
+  console.log({
+    title,
+    description,
+    price,
+    image,
+  });
   const response = schema.safeParse({ title, description, price, image });
+  console.log(response);
   if (response.success) {
     return true;
   } else {

@@ -80,7 +80,7 @@ router.get("/courses", creatorMiddleware, async (req, res) => {
   res.status(200).json(courses);
 });
 
-router.get("createdCourses", creatorMiddleware, async (req, res) => {
+router.get("/createdCourses", creatorMiddleware, async (req, res) => {
   const creator = await Creator.findOne({
     username: req.body.username,
   });
@@ -91,7 +91,7 @@ router.get("createdCourses", creatorMiddleware, async (req, res) => {
   });
 });
 
-router.get("purchasedCourses", creatorMiddleware, async (req, res) => {
+router.get("/purchasedCourses", creatorMiddleware, async (req, res) => {
   const creator = await Creator.findOne({
     username: req.body.username,
   });

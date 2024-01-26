@@ -10,6 +10,8 @@ function validateCourseMiddleware(req, res, next) {
     details: req.body.details ? req.body.details : {},
   };
 
+  console.log(course);
+
   if (
     validateCourse(course.title, course.description, course.price, course.image)
   ) {

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from "./components/auth/SignIn";
 import LandingPage from "./components/LandingPage";
 import { RecoilRoot } from "recoil";
+import PurchasedCourses from "./components/PurchasedCourses";
 // import SignUp from "./components/authentication/SignUp";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<SignIn />}></Route>
             <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/home" element={<LandingPage />}></Route>
+            <Route path="/myLearnings" element={<PurchasedCourses />}></Route>
             {/* <Route path="/signup" element={<SignUp />}></Route> */}
           </Routes>
         </BrowserRouter>

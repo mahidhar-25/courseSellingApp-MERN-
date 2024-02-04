@@ -11,18 +11,22 @@ function LandingPage() {
 
   const AllCourses = useRecoilValue(filteredAllCourses);
   return (
-    <div className="flex flex-wrap flex-row  justify-evenly m-auto">
-      {AllCourses.map((course) => (
-        <CourseCard
-          key={course._id}
-          imageUrl={course.image}
-          title={course.title}
-          description={course.description}
-          rating={course.details.rating}
-          // price={course.price}
-        />
-      ))}
-    </div>
+    <>
+      <NavItems />
+      <div className="flex flex-wrap flex-row  justify-evenly m-auto">
+        {AllCourses.map((course) => (
+          <CourseCard
+            key={course._id}
+            courseId={course._id}
+            imageUrl={course.image}
+            title={course.title}
+            description={course.description}
+            rating={course.details.rating}
+            // price={course.price}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

@@ -10,7 +10,17 @@ export const showNav = atom({
   },
 });
 
+export const isLoggedIn = atom({
+  key: "isLoggedIn",
+  default: true,
+});
+
 export const filterToSearch = atom({
   key: "filterToSearch",
   default: "",
+});
+
+export const loading = atom({
+  key: "loading",
+  default: true,
 });

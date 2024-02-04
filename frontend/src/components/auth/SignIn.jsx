@@ -1,10 +1,13 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { isLoggedIn } from "../../store/atoms/nav";
 
 const SignIn = () => {
   const baseUrl = "http://localhost:3000";
   const navigate = useNavigate();
+  const setIsLoggedIn = useSetRecoilState(isLoggedIn);
 
   const usernameRef = useRef("");
   const passwordRef = useRef("");
@@ -28,6 +31,7 @@ const SignIn = () => {
       );
       localStorage.setItem("accessToken", loginToken.data.accessToken);
       if (loginToken.data.accessToken) {
+        setIsLoggedIn(true);
         navigate("/home");
       }
     } catch (error) {
@@ -52,6 +56,7 @@ const SignIn = () => {
       );
       localStorage.setItem("accessToken", loginToken.data.accessToken);
       if (loginToken.data.accessToken) {
+        setIsLoggedIn(true);
         navigate("/home");
       }
     } catch (error) {

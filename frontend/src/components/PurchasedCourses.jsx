@@ -8,6 +8,7 @@ function PurchasedCourses() {
   const filteredCourses = useRecoilValue(myFilteredPurchasedCourses);
   return (
     <>
+      <NavItems />
       <div className="flex flex-wrap flex-row  justify-evenly m-auto">
         {filteredCourses.map((purchasedCourse) => (
           <CourseCard

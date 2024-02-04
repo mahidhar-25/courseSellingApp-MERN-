@@ -9,14 +9,30 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Progress } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+import React, { useCallback } from "react";
 
-import React from "react";
+function CourseCard({ courseId, imageUrl, title, description, rating }) {
+  const navigate = useNavigate();
 
-function CourseCard({ imageUrl, title, description, rating }) {
+  const removeSpaceReplaceUnderScore = useCallback((title) => {
+    return title.replaceAll(" ", "_");
+  }, []);
+
+  // const goToCourseDetails = useCallback(
+  //   (title) => {
+  //     const titleUrl = removeSpaceReplaceUnderScore(title);
+  //     console.log(titleUrl);
+  //     console.log("/course/" + titleUrl);
+  //     navigate("/course/" + titleUrl);
+  //   },
+  //   [title]
+  // );
+
   return (
     <Card className="max-w-sm rounded overflow-hidden shadow-lg flex flex-col mx-3 my-3">
       <CardHeader floated={false} color="blue-gray">
-        <img width="300" height="400" src={imageUrl} alt="image course" />
+        <img width="300" height="350" src={imageUrl} alt="image course" />
       </CardHeader>
       <CardBody>
         <div className="mb-3 flex items-center justify-between">
@@ -52,7 +68,7 @@ function CourseCard({ imageUrl, title, description, rating }) {
               50%
             </Typography>
           </div>
-          <Progress value={50} size="sm" />
+          <Progress value={50} color="black" size="sm" />
         </div>
       </CardBody>
       <CardFooter className="pt-3">
@@ -60,6 +76,9 @@ function CourseCard({ imageUrl, title, description, rating }) {
           size="lg"
           fullWidth={true}
           className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          onClick={() => {
+            navigate("/course/" + removeSpaceReplaceUnderScore(title));
+          }}
         >
           Go to course
         </Button>
